@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  resources :posts
+  resources :posts, except: [:destroy]
+  delete 'posts/:id/delete' => 'posts#destroy', as: 'posts_delete'
+  get 'posts/:id/delete' => 'posts#destroy'
   root "posts#index"
 end

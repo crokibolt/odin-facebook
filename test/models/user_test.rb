@@ -1,16 +1,14 @@
 require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+
   setup do
-    @user1 = User.create(email: "miriom@bar.com", password: "1234")
-    @user2 = User.create(email: "trom@bar.com", password: "1234")    
+    @user1 = User.create(email: "miriom@bar.com", password: "123456")
+    @user2 = User.create(email: "trom@bar.com", password: "123456")    
   end
 
   test "should not save without email or password" do
-    no_email = User.new(password: '123')
+    no_email = User.new(password: '123456')
     no_password = User.new(email: 'foo@bar.com')
 
     assert_not no_email.save, "Saved without email"  
