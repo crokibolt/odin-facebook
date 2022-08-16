@@ -2,6 +2,7 @@ class PostsController < ApplicationController
     def index
         @user = current_user
         @posts = Post.where(user_id: @user.id).or(Post.where(user_id: @user.friends.ids)).order(created_at: :desc)
+        @comment = Comment.new
     end
 
     def new
@@ -34,6 +35,10 @@ class PostsController < ApplicationController
     private
 
     def post_params
-        params.permit(:body, :user_id)
+        if params.has_key?("post")
+            params.require(:post).permit(:body, :user_id)
+        else
+            params.permit(:body, :user_id)
+        end
     end
 end

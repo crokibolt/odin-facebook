@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+</head>
+<body>    
+    <div id="profile-display">
+        <article class="media">
+            <figure class="media-left">
+                        <p class="image is-128x128">
+                            <%= image_tag 'default.jpg'%>
+                        </p>
+                    </figure>
+                    <div class="media-object">
+                        <div class="content">
+                            <p><strong><%= @user.email %></strong></p>
+
+                            <%= link_to user_friends_path(@user) do %>
+                                <p>Friends</p>
+                            <% end %>
+
+                            <% if @user != current_user %>
+                                <% if !@user.in?(current_user.friends) %>
+                                    <% if @sent.empty? %>
+                                    <div class="button is-link">
+                                        <%= link_to friend_requests_path(:sender=> current_user, :receiver => @user) do %>
+                                            <p>Send Friend Request</p>
+                                        <% end %>
+                                    </div>
+                                    <% else %>
+                                    <div class="button is-success">
+                                        <p>Pending Request</p>
+                                    </div>
+                                    <% end %>
+                                <% end %>
+                            <% end %>
+                        </div>
+                    </div>
+        </article>
+    </div>
+    <br>
+    <div id="post-form" >
+        <% if @user == current_user %>
+            <%= render 'posts/post_form'%>
+        <% end %>
+    </div>
+    <br>
+    <div id="post-display">
+        <%= render 'posts/post_display' %>
+    </div>
+</body>
+</html>

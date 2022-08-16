@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friends</title>
+</head>
+<body>
+    <% if @user == current_user %>
+        <p class="title is-h1">Your friends</p>
+    <% else %>
+        <p class="title is-h1"><%= @user.email%> friends</p>
+    <% end %>
+
+    <div id="friends-display">
+        <% @friends.each do |friend| %>
+            <article class="media">
+                <figure class="media-left">
+                    <p class="image is-64x64">
+                        <%= image_tag 'default.jpg'%>
+                    </p>
+                </figure>
+                <div class="media-object">
+                    <div class="content">
+                        <%= link_to friend do %>
+                            <p><strong><%= friend.email %></strong></p>
+                        <% end %>
+                    </div>
+                </div>
+            </article>
+        <% end %>
+    </div>
+</body>
+</html>

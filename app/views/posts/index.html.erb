@@ -7,66 +7,9 @@
     <meta name="turbolinks-visit-control" content="reload">
     <title>Feisbu</title>
 </head>
-<body>
-    <h1>Index page</h1>
-    <%= form_with model: @post, local: false do |f|  %>
-        <div class="field is-horizontal">
-            <div class="field-body">
-                <div class="field">
-                    <div class="control">
-                        <%= f.text_area :body, {class: 'textarea', placeholder: 'Wanna share something?'} %>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="field is-horizontal">
-            <div class="field-body">
-                <div class="field">
-                    <div class="control">
-                        <%= f.hidden_field :user_id, value: @user.id %>
-                        <%= f.submit 'Post', {class: 'button is-link is-small'} %>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <% end %>
-
-    <div id="post-container">
-    <% @posts.each do |post| %>
-        <article class="media">
-            <figure class="media-left">
-                <p class="image is-64x64">
-                    <img src="" alt="">
-                </p>
-            </figure>
-            <div class="media-object">
-                <div class="content">
-                    <p>
-                        <strong><%= post.user.email %></strong>
-                        <br>
-                        <%= post.body %>
-                    </p>
-                </div>
-                <nav class="level is-mobile">
-                    <div class="level-left">
-                        <a href="" class="level-item">
-                            <span class="icon is-small"><ion-icon name="heart"></ion-icon></i></span>
-                        </a>
-                        <a href="" class="level-item">
-                            <span class="icon is-small"><ion-icon name="chatbox"></ion-icon></span>
-                        </a>
-                        <% if post.user = @user %>
-                            <%= link_to posts_delete_path(post), data: { confirm: 'Are you sure?' }, :method => :destroy, class: "level-item" do %>
-                                <span class="icon is-small has-text-danger"><ion-icon name="close-circle"></ion-icon></span>
-                            <% end %>
-                        <% end %>
-                    </div>
-                </nav>
-            </div>
-        </article>
-    <% end %>
-    </div>
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<body>    
+    <div id="post-form"><%= render "post_form" %></div>
+    <br>
+    <div id="post-container"><%= render "post_display" %></div>
 </body>
 </html>

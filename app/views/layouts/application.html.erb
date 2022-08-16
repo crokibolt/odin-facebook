@@ -1,3 +1,5 @@
+<% @requests = FriendRequest.where(:receiver => current_user) %>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -11,6 +13,73 @@
   </head>
 
   <body>
+    <% if current_user != nil %>
+    <nav class="navbar is-dark">
+      <div class="navbar-brand">
+        <%= link_to root_path, class:'navbar-item' do %>
+          <p class="title is-h1", style="color:white">Feisbu</p>
+        <% end %>
+      </div>
+      <div class="navbar-menu">
+        <div class="navbar-start">
+          <%= link_to current_user, class:'navbar-item' do %>
+            <p class="is-h2", style="color:white">Profile</p>
+          <% end %>
+
+          <%= link_to user_friends_path(:id => current_user.id), class:'navbar-item' do %>
+            <p class="is-h2", style="color:white">Friends</p>
+          <% end %>
+
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a href="" class="navbar-link">
+              Friend Requests
+            </a>
+
+            <div class="navbar-dropdown">
+              <% @requests.each do |request| %>
+                <div class="navbar-item">
+                  <article class="media">
+                    <figure class="media-left">
+                      <p class="image is-64x64">
+                        <%= image_tag 'default.jpg' %>
+                      </p>
+                    </figure>
+                    <div class="media-object">
+                      <div class="content">
+                        <p>
+                          <div class="button is-success">
+                            <%= link_to friend_requests_delete_path(request,:accepted => true) do %>
+                              Accept
+                            <% end %>
+                          </div>
+
+                          <div class="button is-danger">
+                            <%= link_to friend_requests_delete_path(request, :accepted => false) do %>
+                              Decline
+                            <% end %>
+                          </div>
+                        </p>
+                      </div>
+                    </div>
+
+                  </article>
+                </div>
+              <% end %>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+      <div class="navbar-end">
+        <div class="button is-danger navbar-item">
+          <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+        </div>
+      </div>
+    </nav>
+    <% end %>
     <%= yield %>
   </body>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </html>
