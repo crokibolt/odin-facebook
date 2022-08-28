@@ -37,15 +37,22 @@
 
             <div class="navbar-dropdown">
               <% @requests.each do |request| %>
+              
                 <div class="navbar-item">
                   <article class="media">
                     <figure class="media-left">
+
                       <p class="image is-64x64">
                         <%= image_tag request.sender.gravatar_url %>
                       </p>
+
                     </figure>
                     <div class="media-object">
+
                       <div class="content">
+                        <%= link_to user_path(request.sender) do %>
+                        <p><strong><%= request.sender.email %></strong></p>
+                        <% end %>
                         <p>
                           <div class="button is-success">
                             <%= link_to friend_requests_delete_path(request,:accepted => true) do %>
@@ -60,8 +67,8 @@
                           </div>
                         </p>
                       </div>
-                    </div>
 
+                    </div>
                   </article>
                 </div>
               <% end %>

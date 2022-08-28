@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:show]
   get 'users/:id/friends' => 'users#index', as: 'user_friends'
+  get 'users/:id/friends/delete' => 'users#remove_friend', as: 'user_remove_friend'
 
   resources :friend_requests, only: [:create]
   delete 'friend_requests/:id/delete' => 'friend_requests#destroy', as: 'friend_requests_delete'

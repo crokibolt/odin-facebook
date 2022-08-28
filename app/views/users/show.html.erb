@@ -18,13 +18,29 @@
                         <div class="content">
                             <p><strong><%= @user.email %></strong></p>
 
+                            <div class="button is-link">
                             <%= link_to user_friends_path(@user) do %>
                                 <p>Friends</p>
                             <% end %>
+                            </div><br>
 
                             <% if @user != current_user %>
                                 <% if !@user.in?(current_user.friends) %>
-                                    <% if @sent.empty? %>
+                                    <% if !@received.empty? %>
+                                        <p>
+                                            <div class="button is-success">
+                                            <%= link_to friend_requests_delete_path(@received.first,:accepted => true) do %>
+                                                Accept
+                                            <% end %>
+                                            </div>
+
+                                            <div class="button is-danger">
+                                            <%= link_to friend_requests_delete_path(@received.first, :accepted => false) do %>
+                                                Decline
+                                            <% end %>
+                                            </div>
+                                        </p>
+                                    <% elsif @sent.empty? %>
                                     <div class="button is-link">
                                         <%= link_to friend_requests_path(:sender=> current_user, :receiver => @user) do %>
                                             <p>Send Friend Request</p>
@@ -35,6 +51,12 @@
                                         <p>Pending Request</p>
                                     </div>
                                     <% end %>
+                                <% elsif @user.in?(current_user.friends) %>
+                                    <div class="button is-danger">
+                                        <%= link_to user_remove_friend_path(@user) do %>
+                                            <p>Remove friend</p>
+                                        <% end %>
+                                    </div>
                                 <% end %>
                             <% end %>
                         </div>
