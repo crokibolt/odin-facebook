@@ -5,7 +5,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :confirmable
 
   has_many :friend_requests, foreign_key: :receiver_id
   has_many :sent_requests, class_name: "FriendRequest", foreign_key: :sender_id
@@ -17,4 +17,8 @@ class User < ApplicationRecord
   has_many :posts
   has_many :comments
   has_many :likes
+
+  def after_confirmation
+    UserMailer.welcome_email(self).deliver
+  end
 end

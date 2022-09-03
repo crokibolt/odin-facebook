@@ -70,6 +70,7 @@ group :development do
 
   gem 'guard'
   gem 'guard-minitest'
+  gem "letter_opener"
   
 end
 
