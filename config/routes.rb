@@ -24,5 +24,9 @@ Rails.application.routes.draw do
   delete 'comments/:id/delete' => 'comments#destroy', as: 'comments_delete'
   get 'comments/:id/delete' => 'comments#destroy'
   
+  get 'likes' => 'likes#create', as: 'likes_create'
+  delete 'likes/:id/delete' => 'likes#destroy', as: 'likes_delete'
+  get 'likes/:id/delete' => 'likes#destroy'
+
   root "posts#index"
 end

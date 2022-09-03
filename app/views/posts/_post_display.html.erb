@@ -14,13 +14,21 @@
                 </p>
             </div>
             <nav class="level is-mobile">
-                <div class="level-left">                
-                    <a href="" class="level-item">
-                        <span class="icon is-small"><ion-icon name="heart"></ion-icon></i></span>
-                    </a>
-                    <a href="" class="level-item">
-                        <span class="icon is-small"><ion-icon name="chatbox"></ion-icon></span>
-                    </a>
+                <div class="level-left">
+                <% if post.likes.where(user_id: current_user.id).empty? %>                
+                    <%= link_to likes_create_path(:like => {:user_id => current_user.id, :post_id => post.id}) do  %>
+                        <p>
+                            <span class="icon is-small"><ion-icon name="heart"></ion-icon></i></span> Like
+                        </p>
+                                                
+                    <% end %>
+                <% else %>
+                    <%= link_to likes_delete_path(post.likes.where(user_id: current_user.id)[0]) do %>
+                        <p style="color: red">
+                            <span class="icon is-small"><ion-icon name="heart"></ion-icon></i></span> Liked
+                        </p>
+                    <% end %>
+                <% end %>
                 </div>
             </nav>                
             <% post.comments.each do |comment| %>
